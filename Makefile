@@ -6,24 +6,30 @@
 #    By: abiri <kerneloverseer@pm.me>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/29 18:57:44 by abiri             #+#    #+#              #
-#    Updated: 2019/12/29 20:17:51 by abiri            ###   ########.fr        #
+#    Updated: 2019/12/30 15:03:17 by abiri            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 FLAGS = -Wall -Werror -Wextra
 
+.PHONY: all
+all: main
+
+include ./libraries_linking.mk
 include ./assembler/assembler.mk
 include ./virtual_machine/virtual_machine.mk
 
-.PHONY: all
-all: $(VIRTUAL_MACHINE_NAME) $(ASSEMBLER_NAME)
+# MAIN RULES
+
+.PHONY: main
+main: libft $(VIRTUAL_MACHINE_NAME) $(ASSEMBLER_NAME)
 
 .PHONY: clean
-clean: virtual_machine_clean assembler_clean
+clean: virtual_machine_clean assembler_clean libft_clean
 
 .PHONY: fclean
-fclean: virtual_machine_fclean assembler_fclean
+fclean: virtual_machine_fclean assembler_fclean libft_fclean
 
 .PHONY: re
 re: fclean all

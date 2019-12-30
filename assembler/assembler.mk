@@ -6,7 +6,7 @@
 #    By: abiri <kerneloverseer@pm.me>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/29 17:57:31 by abiri             #+#    #+#              #
-#    Updated: 2019/12/29 20:16:12 by abiri            ###   ########.fr        #
+#    Updated: 2019/12/30 14:58:27 by abiri            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ ASSEMBLER_INC_DIR := $(addprefix -I, $(ASSEMBLER_INC_DIR))
 .PHONY: asm
 asm: $(ASSEMBLER_NAME)
 
-$(ASSEMBLER_NAME): $(ASSEMBLER_OBJ)
+$(ASSEMBLER_NAME): $(ASSEMBLER_OBJ) libft
 	$(CC) $(FLAGS) $(ASSEMBLER_OBJ) $(ASSEMBLER_INC_DIR) -o $(ASSEMBLER_NAME)
 
 $(ASSEMBLER_OBJ): $(ASSEMBLER_OBJ_DIR)/%.o : $(ASSEMBLER_SRC_DIR)/%.c | $(ASSEMBLER_OBJ_DIR)

@@ -6,14 +6,14 @@
 #    By: abiri <kerneloverseer@pm.me>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/29 18:16:57 by abiri             #+#    #+#              #
-#    Updated: 2019/12/29 20:16:18 by abiri            ###   ########.fr        #
+#    Updated: 2019/12/30 14:58:28 by abiri            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # EDIT ONLY HERE
 
 VIRTUAL_MACHINE_DIR = ./virtual_machine
-VIRTUAL_MACHINE_NAME = vm
+VIRTUAL_MACHINE_NAME = corewar
 VIRTUAL_MACHINE_SRC_NAMES = main.c
 
 # AUTOMATIC PART
@@ -29,7 +29,7 @@ VIRTUAL_MACHINE_INC_DIR := $(addprefix -I, $(VIRTUAL_MACHINE_INC_DIR))
 .PHONY: vm
 vm: $(VIRTUAL_MACHINE_NAME)
 
-$(VIRTUAL_MACHINE_NAME): $(VIRTUAL_MACHINE_OBJ)
+$(VIRTUAL_MACHINE_NAME): $(VIRTUAL_MACHINE_OBJ) libft
 	$(CC) $(FLAGS) $(VIRTUAL_MACHINE_OBJ) $(VIRTUAL_MACHINE_INC_DIR) -o $(VIRTUAL_MACHINE_NAME)
 
 $(VIRTUAL_MACHINE_OBJ): $(VIRTUAL_MACHINE_OBJ_DIR)/%.o : $(VIRTUAL_MACHINE_SRC_DIR)/%.c | $(VIRTUAL_MACHINE_OBJ_DIR)
