@@ -6,7 +6,7 @@
 /*   By: abiri <kerneloverseer@pm.me>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 23:39:14 by abiri             #+#    #+#             */
-/*   Updated: 2020/01/01 16:07:44 by abiri            ###   ########.fr       */
+/*   Updated: 2020/01/01 18:12:34 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void		*ttslist_pop_content(t_list_head *head);
 void		*ttslist_iter_content(t_list_head	*head);
 t_list_node	*ttslist_iter(t_list_head *head);
 void		*ttslist_get_id_content(t_list_head *head, int id);
+void		*ttslist_splice(t_list_head *head, t_list_node *node);
 
 /*
 **	INTERNAL FUNCTIONS

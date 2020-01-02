@@ -6,7 +6,7 @@
 #    By: abiri <kerneloverseer@pm.me>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/29 18:16:57 by abiri             #+#    #+#              #
-#    Updated: 2019/12/30 19:16:17 by abiri            ###   ########.fr        #
+#    Updated: 2020/01/02 13:31:21 by abiri            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,11 @@ VIRTUAL_MACHINE_DIR = ./virtual_machine
 VIRTUAL_MACHINE_NAME = corewar
 VIRTUAL_MACHINE_SRC_NAMES =	general_tools.c\
 							init/arg_verification.c\
+							init/error_management.c\
 							init/op.c\
 							init/player_args.c\
+							init/player_loading.c\
+							init/vm_process_init.c\
 							main.c\
 							parsing/general_parsing_tools.c
 

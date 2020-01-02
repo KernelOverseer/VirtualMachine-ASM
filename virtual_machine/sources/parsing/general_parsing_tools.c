@@ -28,6 +28,12 @@ int	ft_match_charset_times(char *string, char *charset, int min, int max)
 	return (index);
 }
 
+unsigned int ft_switch_endian(unsigned int value)
+{
+    return (((value & 0x000000ff) << 24) | ((value & 0x0000ff00) << 8) |
+            ((value & 0x00ff0000) >> 8) | ((value & 0xff000000) >> 24));
+}
+
 int	ft_parse_int(char *number, int *integer)
 {
 	int	index;

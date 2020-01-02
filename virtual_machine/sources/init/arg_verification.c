@@ -42,7 +42,7 @@ int	ft_process_flag(t_vm_env *vm_env, char *flag, char **args)
 			return (flag_data->handler(vm_env, flag_data->flag_index, args));
 		index++;
 	}
-	return (0);
+	return (ft_raise_exception(ERROR_wrong_flag, flag));
 }
 
 int	ft_check_args(t_vm_env *vm_env, int argc, char **argv)
@@ -61,8 +61,8 @@ int	ft_check_args(t_vm_env *vm_env, int argc, char **argv)
 			if (!index_jump)
 				return (0);
 		}
-		else
-			ft_add_new_player(vm_env, argv[index]);
+		else if (!ft_add_new_player(vm_env, argv[index]))
+		    return (0);
 		index += index_jump;
 	}
 	return (1);
