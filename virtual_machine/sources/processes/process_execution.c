@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abiri <kerneloverseer@pm.me>               +#+  +:+       +#+        */
+/*   By: slyazid <slyazid@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 17:00:45 by abiri             #+#    #+#             */
-/*   Updated: 2020/01/06 00:59:28 by abiri            ###   ########.fr       */
+/*   Updated: 2020/01/06 02:55:52 by slyazid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int ft_valid_opcode(int opcode)
     return (ERROR);
 }
 
-int ft_correct_negative(short int num)
+int    ft_int_endian(int i)
 {
-    return (num);
+    return (((i >> 24) & 0xFF) | ((i >> 8) & 0xFF00) | ((i << 8) & 0xFF0000) | ((i << 24) & 0xFF000000));
 }
 
-unsigned short  ft_short_endian(unsigned short i)
+short  ft_short_endian(short i)
 {
     return ((i >> 8 | i << 8) & 0xFFFF);
 }
@@ -34,9 +34,9 @@ unsigned int    ft_get_value(unsigned char *mem, int size)
     if (size == 1)
         return (*((unsigned char*)mem));
     else if (size == 2)
-        return (ft_correct_negative(ft_short_endian(*((unsigned short int *)mem))));
+        return (ft_short_endian(*((unsigned short int *)mem)));
     else if (size == 4)
-        return (ft_switch_endian(*((unsigned int *)mem)));
+        return (ft_int_endian(*((unsigned int *)mem)));
     return (0);
 }
 
@@ -151,7 +151,7 @@ int	ft_get_arguments_types(t_vm_process *process, t_vm_arena *arena)
 	while (index < op_data->args_number)
 	{
 		process->operation.args[index].type =
-			(((type_byte >> (6 - 2 * index)) | 0b11));
+			(((type_byte >> (6 - 2 * index)) & 0b11));
 		index++;
 	}
 	process->operation.op_size += 1;
@@ -196,11 +196,11 @@ int	ft_load_arguments_value(t_vm_process *process, t_vm_arena *arena)
 		% MEM_SIZE];
 	while (index < op_data->args_number)
 	{
-		if (process->operation.args[index].type == T_REG)
-			size = REG_SIZE;
-		else if (process->operation.args[index].type == T_IND)
+		if (process->operation.args[index].type == REG_CODE)
+			size = T_REG;
+		else if (process->operation.args[index].type == IND_CODE)
 			size = IND_SIZE;
-		else if (process->operation.args[index].type == T_DIR)
+		else if (process->operation.args[index].type == DIR_CODE)
 			size = DIR_SIZE - (2 * op_data->label_size);
 		ft_get_mem_int(&(process->operation.args[index].value),
 				size, mem);
@@ -233,9 +233,9 @@ int	ft_parse_operation(t_vm_process *process, t_vm_arena *arena)
 	operation->op_code = arena->memory[process->current_position % MEM_SIZE];
 	if (!ft_valid_opcode(operation->op_code))
 		return (ERROR);
-	printf("OPCODE IS VALID\n");
+	// printf("OPCODE IS VALID\n");
 	ft_parse_operation_arguments(process, arena);
-	printf("PARSED ARGUMENTS\n");
+	// printf("PARSED ARGUMENTS\n");
 	return (SUCCESS);
 }
 
@@ -249,14 +249,14 @@ void	debug_print_operation(t_vm_operation operation)
 	index = 0;
 	while (index < op_data->args_number)
 	{
-		if (operation.args[index].type == T_REG)
+		if (operation.args[index].type == REG_CODE)
 			printf("r%d ", operation.args[index].value.int1);
-		else if (operation.args[index].type == T_DIR && op_data->label_size)
-			printf("%%%d ", operation.args[index].value.int2);
-		else if (operation.args[index].type == T_DIR)
-			printf("%%%d ", operation.args[index].value.int4);
-		else if (operation.args[index].type == T_IND)
-			printf("%d ", operation.args[index].value.int4);
+		else if (operation.args[index].type == DIR_CODE && op_data->label_size)
+			printf("%%%d ", ft_short_endian(operation.args[index].value.int2));
+		else if (operation.args[index].type == DIR_CODE)
+			printf("%%%d ", ft_int_endian(operation.args[index].value.int4));
+		else if (operation.args[index].type == IND_CODE)
+			printf("%d ", ft_int_endian(operation.args[index].value.int4));
 		index++;
 	}
 	printf("\n");
@@ -264,7 +264,7 @@ void	debug_print_operation(t_vm_operation operation)
 
 int	ft_execute_instruction(t_vm_process *process, t_vm_arena *arena)
 {
-	printf("PARSING INSTRUCTION\n");
+	// printf("PARSING INSTRUCTION\n");
 	if (!ft_parse_operation(process, arena))
 		return (ERROR);
 	debug_print_operation(process->operation);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abiri <kerneloverseer@pm.me>               +#+  +:+       +#+        */
+/*   By: slyazid <slyazid@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/02 16:27:47 by abiri             #+#    #+#             */
-/*   Updated: 2020/01/02 16:27:47 by abiri            ###   ########.fr       */
+/*   Updated: 2020/01/06 02:45:57 by slyazid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ int ft_execute_processes(t_vm_env *env)
     while ((process = ttslist_iter_content(&(env->arena.processes))))
     {
         ft_execute_instruction(process, &env->arena);
-        process->current_position++;
+        process->current_position += process->operation.op_size;
+        if (process->current_position > MEM_SIZE)
+            return (ERROR); // to stop when the process reaches the end
         if (process->remaining_cycles > 0)
             process->remaining_cycles--;
     }
@@ -45,13 +47,14 @@ int ft_main_vm_loop(t_vm_env *env)
 {
     while (TRUE)
     {
-        if (env->settings.cycles_number && env->settings.cycles_number %
-            env->settings.cycles_to_die == 0)
-        {
-            if (ft_no_lives_from_processes(&env->arena.processes, env))
-                break;
-        }
-        ft_execute_processes(env);
+        // if (env->settings.cycles_number && env->settings.cycles_number %
+        //     env->settings.cycles_to_die == 0)
+        // {
+        //     if (ft_no_lives_from_processes(&env->arena.processes, env))
+        //         break;
+        // }
+        if (!ft_execute_processes(env))
+            return (SUCCESS);
         if (env->init.flags & FLAG_visualizer)
             ft_visualizer_init(env);
         env->settings.cycles_number++;
