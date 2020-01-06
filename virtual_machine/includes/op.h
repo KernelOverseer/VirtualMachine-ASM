@@ -64,13 +64,15 @@ typedef struct		s_op
 {
 	char			*name;
 	int				args_number;
-	int				args_type[4];
+	int				args_type[MAX_ARGS_NUMBER];
 	char			op_code;
 	int				cycle_number;
 	char			*description;
 	int				octet_codage;
 	int				label_size;
 }					t_op;
+
+extern t_op g_op_tab[17];
 
 typedef struct		s_header
 {

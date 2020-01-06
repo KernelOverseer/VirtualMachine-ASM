@@ -83,7 +83,7 @@ int	ft_add_new_player(t_vm_env	*vm_env, char *filename)
 		return (ft_raise_exception(ERROR_wrong_argument, ", filename is not specified"));
 	if (!ft_verify_player_name(filename))
 	    return (0);
-	if (!(player = ft_memalloc(sizeof(t_vm_player))))
+	if (!(player = malloc(sizeof(t_vm_player))))
 		return (ft_raise_exception(ERROR_allocation_problem, NULL));
 	player->index = PLAYER_INDEX_NONE;
 	player->filename = filename;

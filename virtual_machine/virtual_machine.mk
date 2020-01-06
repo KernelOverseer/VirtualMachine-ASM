@@ -6,7 +6,7 @@
 #    By: abiri <kerneloverseer@pm.me>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/29 18:16:57 by abiri             #+#    #+#              #
-#    Updated: 2020/01/02 13:31:21 by abiri            ###   ########.fr        #
+#    Updated: 2020/01/05 23:19:57 by abiri            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@
 VIRTUAL_MACHINE_DIR = ./virtual_machine
 VIRTUAL_MACHINE_NAME = corewar
 VIRTUAL_MACHINE_SRC_NAMES =	general_tools.c\
+							init/arena_init.c\
 							init/arg_verification.c\
 							init/error_management.c\
 							init/op.c\
@@ -22,7 +23,12 @@ VIRTUAL_MACHINE_SRC_NAMES =	general_tools.c\
 							init/player_loading.c\
 							init/vm_process_init.c\
 							main.c\
-							parsing/general_parsing_tools.c
+							main_loop.c\
+							parsing/general_parsing_tools.c\
+							processes/memory_access.c\
+							processes/process_execution.c\
+							processes/processes_init.c\
+							visualizer/visualizer_init.c
 
 # AUTOMATIC PART
 
@@ -34,18 +40,19 @@ VIRTUAL_MACHINE_SRC = $(addprefix $(VIRTUAL_MACHINE_SRC_DIR)/, $(VIRTUAL_MACHINE
 VIRTUAL_MACHINE_OBJ = $(addprefix $(VIRTUAL_MACHINE_OBJ_DIR)/, $(VIRTUAL_MACHINE_SRC_NAMES:.c=.o))
 VIRTUAL_MACHINE_INC_DIR := $(addprefix -I, $(VIRTUAL_MACHINE_INC_DIR))
 VIRTUAL_MACHINE_INC_DIR += -I $(LIBFT_INC) -I $(TTSLIST_INC)
+VIRTUAL_MACHINE_OBJ_DIRS = $(sort $(dir $(VIRTUAL_MACHINE_OBJ)))
 
 .PHONY: vm
 vm: $(VIRTUAL_MACHINE_NAME)
 
 $(VIRTUAL_MACHINE_NAME): $(VIRTUAL_MACHINE_OBJ) libft ttslist
-	$(CC) $(FLAGS) $(VIRTUAL_MACHINE_OBJ) $(LIBFT_LINK) $(TTSLIST_LINK) $(VIRTUAL_MACHINE_INC_DIR) -o $(VIRTUAL_MACHINE_NAME)
+	$(CC) $(FLAGS) $(VIRTUAL_MACHINE_OBJ) $(LIBFT_LINK) -lncurses $(TTSLIST_LINK) $(VIRTUAL_MACHINE_INC_DIR) -o $(VIRTUAL_MACHINE_NAME)
 
-$(VIRTUAL_MACHINE_OBJ): $(VIRTUAL_MACHINE_OBJ_DIR)/%.o : $(VIRTUAL_MACHINE_SRC_DIR)/%.c | $(VIRTUAL_MACHINE_OBJ_DIR)
+$(VIRTUAL_MACHINE_OBJ): $(VIRTUAL_MACHINE_OBJ_DIR)/%.o : $(VIRTUAL_MACHINE_SRC_DIR)/%.c | $(VIRTUAL_MACHINE_OBJ_DIRS)
 	$(CC) $(FLAGS) -c $< -o $@ $(VIRTUAL_MACHINE_INC_DIR)
 
-$(VIRTUAL_MACHINE_OBJ_DIR):
-	@-mkdir $(dir $(VIRTUAL_MACHINE_OBJ))
+$(VIRTUAL_MACHINE_OBJ_DIRS):
+	@-mkdir $(VIRTUAL_MACHINE_OBJ_DIRS)
 
 .PHONY: virtual_machine_clean
 virtual_machine_clean:

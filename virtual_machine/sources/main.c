@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 18:59:36 by abiri             #+#    #+#             */
-/*   Updated: 2019/12/30 19:30:37 by abiri            ###   ########.fr       */
+/*   Updated: 2020/01/03 11:39:42 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int ft_init_vm_settings(t_vm_env *vm_env)
 
 int	ft_init_env(t_vm_env *vm_env)
 {
-	ft_bzero(vm_env, sizeof(t_vm_env));
+    ft_bzero(&(vm_env->arena.memory), MEM_SIZE);
 	ttslist_init(&(vm_env->init.players));
 	ttslist_init(&(vm_env->arena.processes));
 	return (SUCCESS);
@@ -48,25 +48,24 @@ int	ft_init_env(t_vm_env *vm_env)
 
 int main(int argc, char **argv)
 {
-	t_vm_env	vm_env;
+	t_vm_env	*vm_env;
 
-	if (!ft_init_env(&vm_env))
+	if (!(vm_env = ft_memalloc(sizeof(t_vm_env))))
+	    return (-1 + ft_raise_exception(ERROR_allocation_problem, NULL));
+	if (!ft_init_env(vm_env))
 		return (-1);
-	if (!ft_check_args(&vm_env, argc, argv))
+	if (!ft_check_args(vm_env, argc, argv))
 		return (-1);
-	if (vm_env.init.players.size == 0)
+	if (vm_env->init.players.size == 0)
 	    return (ft_raise_exception(ERROR_no_players, NULL) - 1);
-    if (!ft_sort_player_list(&vm_env.init.players))
+    if (!ft_sort_player_list(&vm_env->init.players))
         return (-1);
-    ft_init_vm_settings(&vm_env);
-
-    /*
-    **  FOR DEBUG
-    */
-
-	t_vm_player *player;
-	vm_env.init.players.iterator = vm_env.init.players.first;
-	while ((player = ttslist_iter_content(&(vm_env.init.players))))
-        printf("player from file : %s with index %d\n", player->filename, player->index);
+    if (!ft_init_vm_settings(vm_env))
+        return (-1);
+    if (!ft_load_players_on_arena(vm_env))
+        return (-1);
+    if (vm_env->init.flags & FLAG_visualizer)
+    	ft_visualizer_init(vm_env);
+    ft_main_vm_loop(vm_env);
 	return (0);
 }

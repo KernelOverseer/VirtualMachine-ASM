@@ -17,9 +17,9 @@
 
 enum	e_commandline_flags
 {
-	flag_player_number = 1,
-	flag_dump = 2,
-	flag_visualizer = 4
+	FLAG_player_number = 1,
+	FLAG_dump = 2,
+	FLAG_visualizer = 4
 };
 
 typedef int	t_flag_processor(void *env, int flag_index, char **params);

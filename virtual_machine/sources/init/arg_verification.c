@@ -14,9 +14,9 @@
 
 const	t_flag_description	g_flags_data[] =
 {
-	{"dump", ft_activate_flag_bit, flag_dump},
-	{"v", ft_activate_flag_bit, flag_visualizer},
-	{"n", ft_player_add_order, flag_player_number}
+	{"dump", ft_activate_flag_bit, FLAG_dump},
+	{"v", ft_activate_flag_bit, FLAG_visualizer},
+	{"n", ft_player_add_order, FLAG_player_number}
 };
 
 int	ft_activate_flag_bit(void *arg, int flag_index, char **params)
