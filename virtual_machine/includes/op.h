@@ -25,6 +25,7 @@
 # define REG_CODE				1
 # define DIR_CODE				2
 # define IND_CODE				3
+# define DIR2_CODE              4
 
 # define MAX_ARGS_NUMBER			4
 # define MAX_PLAYERS				4
@@ -59,20 +60,6 @@ typedef char	t_arg_type;
 # define PROG_NAME_LENGTH		(128)
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
-
-typedef struct		s_op
-{
-	char			*name;
-	int				args_number;
-	int				args_type[MAX_ARGS_NUMBER];
-	char			op_code;
-	int				cycle_number;
-	char			*description;
-	int				octet_codage;
-	int				label_size;
-}					t_op;
-
-extern t_op g_op_tab[17];
 
 typedef struct		s_header
 {

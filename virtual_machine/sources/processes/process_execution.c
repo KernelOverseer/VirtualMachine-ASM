@@ -19,16 +19,6 @@ int ft_valid_opcode(int opcode)
     return (ERROR);
 }
 
-int    ft_int_endian(int i)
-{
-    return (((i >> 24) & 0xFF) | ((i >> 8) & 0xFF00) | ((i << 8) & 0xFF0000) | ((i << 24) & 0xFF000000));
-}
-
-short  ft_short_endian(short i)
-{
-    return ((i >> 8 | i << 8) & 0xFFFF);
-}
-
 unsigned int    ft_get_value(unsigned char *mem, int size)
 {
     if (size == 1)
@@ -201,7 +191,7 @@ int	ft_load_arguments_value(t_vm_process *process, t_vm_arena *arena)
 		else if (process->operation.args[index].type == IND_CODE)
 			size = IND_SIZE;
 		else if (process->operation.args[index].type == DIR_CODE)
-			size = DIR_SIZE - (2 * op_data->label_size);
+            size = DIR_SIZE - (2 * op_data->label_size);
 		ft_get_mem_int(&(process->operation.args[index].value),
 				size, mem);
 		mem += size;
@@ -222,6 +212,7 @@ int	ft_parse_operation_arguments(t_vm_process *process, t_vm_arena *arena)
 	else
 		ft_load_arguments_types(process);
 	ft_load_arguments_value(process, arena);
+	process->operation.op_data = op_data;
 	return (SUCCESS);
 }
 
@@ -239,34 +230,52 @@ int	ft_parse_operation(t_vm_process *process, t_vm_arena *arena)
 	return (SUCCESS);
 }
 
+void ft_debug_print(char *str)
+{
+    static int fd = -1;
+
+    if (fd == -1) {
+        fd = open("/dev/ttys001", O_WRONLY);
+    }
+    ft_putstr_fd(str, fd);
+}
+
 void	debug_print_operation(t_vm_operation operation)
 {
 	t_op	*op_data;
 	int		index;
+	char    buffer[2048];
 
 	op_data = &g_op_tab[operation.op_code - 1];
-	printf("\t%s ", op_data->name);
+	sprintf(buffer, "\t%s ", op_data->name);
+    ft_debug_print(buffer);
 	index = 0;
 	while (index < op_data->args_number)
 	{
 		if (operation.args[index].type == REG_CODE)
-			printf("r%d ", operation.args[index].value.int1);
+			sprintf(buffer, "r%d ", operation.args[index].value.int1);
 		else if (operation.args[index].type == DIR_CODE && op_data->label_size)
-			printf("%%%d ", ft_short_endian(operation.args[index].value.int2));
+			sprintf(buffer, "%%%d ", ft_short_endian(operation.args[index].value.int2));
 		else if (operation.args[index].type == DIR_CODE)
-			printf("%%%d ", ft_int_endian(operation.args[index].value.int4));
+			sprintf(buffer, "%%%d ", ft_int_endian(operation.args[index].value.int4));
 		else if (operation.args[index].type == IND_CODE)
-			printf("%d ", ft_int_endian(operation.args[index].value.int4));
+			sprintf(buffer, "%d ", ft_int_endian(operation.args[index].value.int4));
 		index++;
+        ft_debug_print(buffer);
+        sprintf(buffer, "\n");
+        ft_debug_print(buffer);
 	}
-	printf("\n");
 }
 
-int	ft_execute_instruction(t_vm_process *process, t_vm_arena *arena)
+int	ft_execute_instruction(t_vm_env *env, t_vm_process *process, t_vm_arena
+*arena)
 {
 	// printf("PARSING INSTRUCTION\n");
 	if (!ft_parse_operation(process, arena))
-		return (ERROR);
-	debug_print_operation(process->operation);
+        return (ERROR);
+	if (process->operation.op_data)
+	    process->operation.op_data->exec(env, process);
+	process->remaining_cycles = process->operation.op_data->cycle_number + 1;
+	//debug_print_operation(process->operation);
     return (SUCCESS);
 }

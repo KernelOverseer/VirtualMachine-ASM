@@ -24,9 +24,10 @@ int ft_draw_processes(t_vm_env *env)
         y = process->current_position / 64;
         x = process->current_position % 64;
         attron(COLOR_PAIR(5));
-        mvprintw(y, x * 3, "%2.2x ",
+        mvprintw(y, x * 3, "%2.2x",
                 env->arena.memory[process->current_position]);
         attroff(COLOR_PAIR(5));
+        mvprintw(0, 64 * 3 + 1, "PC : %d\n", process->current_position);
     }
     return (SUCCESS);
 }
@@ -41,6 +42,7 @@ int ft_visualizer_init(t_vm_env *vm_env)
     if (!init)
     {
         initscr();
+        noecho();
         start_color();
         init_pair(1, COLOR_CYAN, COLOR_BLACK);
         init_pair(2, COLOR_GREEN, COLOR_BLACK);
@@ -66,7 +68,8 @@ int ft_visualizer_init(t_vm_env *vm_env)
     }
     ft_draw_processes(vm_env);
     refresh();
-    getch();
+    usleep(500000);
+//    getch();
     init = 1;
   //  endwin();
     return (0);

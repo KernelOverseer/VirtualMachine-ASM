@@ -75,3 +75,10 @@ fabric.properties
 
 # CMAKE
 CMAKE*
+
+# THE DS_STORE
+.DS_Store
+
+# the vim
+*.swp
+*.swo
