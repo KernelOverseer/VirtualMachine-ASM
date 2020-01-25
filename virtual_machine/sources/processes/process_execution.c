@@ -1,130 +1,130 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   process_execution.c                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: slyazid <slyazid@student.1337.ma>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/02 17:00:45 by abiri             #+#    #+#             */
-/*   Updated: 2020/01/06 02:55:52 by slyazid          ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   process_execution.c								:+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: abiri <abiri@student.42.fr>				+#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2020/01/02 17:00:45 by abiri			 #+#	#+#			 */
+/*   Updated: 2020/01/17 11:06:05 by abiri			###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "virtual_machine.h"
 
 int ft_valid_opcode(int opcode)
 {
-    if (opcode > 0 && opcode < 18)
-        return (SUCCESS);
-    return (ERROR);
+	if (opcode > 0 && opcode <= OPERATION_COUNT)
+		return (SUCCESS);
+	return (ERROR);
 }
 
-unsigned int    ft_get_value(unsigned char *mem, int size)
+unsigned int	ft_get_value(unsigned char *mem, int size)
 {
-    if (size == 1)
-        return (*((unsigned char*)mem));
-    else if (size == 2)
-        return (ft_short_endian(*((unsigned short int *)mem)));
-    else if (size == 4)
-        return (ft_int_endian(*((unsigned int *)mem)));
-    return (0);
+	if (size == 1)
+		return (*((unsigned char*)mem));
+	else if (size == 2)
+		return (ft_short_endian(*((unsigned short int *)mem)));
+	else if (size == 4)
+		return (ft_int_endian(*((unsigned int *)mem)));
+	return (0);
 }
 
 /*int ft_debug_print_argument_no_encoding(t_op *operation, unsigned char *mem)
 {
-    int i;
-    int offset;
-    int t_ind_size;
+	int i;
+	int offset;
+	int t_ind_size;
 
-    i = 0;
-    offset = 0;
-    t_ind_size = operation->label_size ? 2 : 4;
-    while (i < operation->args_number)
-    {
-        if (operation->args_type[i] & T_DIR)
-        {
-            printf("%c%d ", DIRECT_CHAR, ft_get_value(mem + offset, t_ind_size));
-            offset += t_ind_size;
-        }
-        else if (operation->args_type[i] & T_IND)
-        {
-            printf("%d ", ft_get_value(mem + offset, T_IND));
-            offset += T_IND;
-        }
-        else if (operation->args_type[i] & T_REG)
-        {
-            printf("r%d ", ft_get_value(mem + offset, 1));
-            offset += 1;
-        }
-        i++;
-    }
-    return (offset);
+	i = 0;
+	offset = 0;
+	t_ind_size = operation->label_size ? 2 : 4;
+	while (i < operation->args_number)
+	{
+		if (operation->args_type[i] & T_DIR)
+		{
+			printf("%c%d ", DIRECT_CHAR, ft_get_value(mem + offset, t_ind_size));
+			offset += t_ind_size;
+		}
+		else if (operation->args_type[i] & T_IND)
+		{
+			printf("%d ", ft_get_value(mem + offset, T_IND));
+			offset += T_IND;
+		}
+		else if (operation->args_type[i] & T_REG)
+		{
+			printf("r%d ", ft_get_value(mem + offset, 1));
+			offset += 1;
+		}
+		i++;
+	}
+	return (offset);
 }
 
 int ft_debug_print_argument_types(int arg_types, int arg_count, unsigned
 char *mem, int t_ind_size)
 {
-    int i;
-    int type;
-    int offset;
+	int i;
+	int type;
+	int offset;
 
-    i = 0;
-    offset = 0;
-    while (i < arg_count) {
-        type = arg_types >> (6 - i * 2);
-        type &= 0b11;
-        if (type == DIR_CODE)
-        {
-            printf("%c%d ", DIRECT_CHAR, ft_get_value(mem + offset, t_ind_size));
-            offset += t_ind_size;
-        }
-        else if (type == IND_CODE)
-        {
-            printf("%d ", ft_get_value(mem + offset, T_IND));
-            offset += T_IND;
-        }
-        else if (type == REG_CODE)
-        {
-            printf("r%d ", ft_get_value(mem + offset, 1));
-            offset += 1;
-        }
-        i++;
-    }
-    return (offset);
+	i = 0;
+	offset = 0;
+	while (i < arg_count) {
+		type = arg_types >> (6 - i * 2);
+		type &= 0b11;
+		if (type == DIR_CODE)
+		{
+			printf("%c%d ", DIRECT_CHAR, ft_get_value(mem + offset, t_ind_size));
+			offset += t_ind_size;
+		}
+		else if (type == IND_CODE)
+		{
+			printf("%d ", ft_get_value(mem + offset, T_IND));
+			offset += T_IND;
+		}
+		else if (type == REG_CODE)
+		{
+			printf("r%d ", ft_get_value(mem + offset, 1));
+			offset += 1;
+		}
+		i++;
+	}
+	return (offset);
 }
 
 int ft_debug_extract_operations(t_vm_process *process, t_vm_arena *arena)
 {
-    int opcode;
-    int argument_types;
-    t_op    *operation;
-    int     offset;
+	int opcode;
+	int argument_types;
+	t_op	*operation;
+	int	 offset;
 
-    opcode = arena->memory[process->current_position % MEM_SIZE];
-    if (!ft_valid_opcode(opcode))
-        return (ERROR);
-    operation = &g_op_tab[opcode - 1];
-    printf("%d:\t%s  ", process->id, operation->name);
-    if (operation->octet_codage)
-    {
-        argument_types = arena->memory[process->current_position % MEM_SIZE +
-                                       1];
-        offset = ft_debug_print_argument_types(argument_types,
-                                               operation->args_number,
-                                               &arena->memory[
-                                                       process->current_position
-                                                       % MEM_SIZE + 2],
-                                                       operation->label_size ? 2 : 4);
-        offset++;
-    }
-    else
-    {
-        offset = ft_debug_print_argument_no_encoding(operation, &arena->memory[
-                process->current_position
-                % MEM_SIZE + 1]);
-    }
-    printf("\n");
-    return (offset);
+	opcode = arena->memory[process->current_position % MEM_SIZE];
+	if (!ft_valid_opcode(opcode))
+		return (ERROR);
+	operation = &g_op_tab[opcode - 1];
+	printf("%d:\t%s  ", process->id, operation->name);
+	if (operation->octet_codage)
+	{
+		argument_types = arena->memory[process->current_position % MEM_SIZE +
+									   1];
+		offset = ft_debug_print_argument_types(argument_types,
+											   operation->args_number,
+											   &arena->memory[
+													   process->current_position
+													   % MEM_SIZE + 2],
+													   operation->label_size ? 2 : 4);
+		offset++;
+	}
+	else
+	{
+		offset = ft_debug_print_argument_no_encoding(operation, &arena->memory[
+				process->current_position
+				% MEM_SIZE + 1]);
+	}
+	printf("\n");
+	return (offset);
 }
 */
 
@@ -142,6 +142,8 @@ int	ft_get_arguments_types(t_vm_process *process, t_vm_arena *arena)
 	{
 		process->operation.args[index].type =
 			(((type_byte >> (6 - 2 * index)) & 0b11));
+		if (!(op_data->args_type[index] & process->operation.args[index].type))
+			return (ERROR);
 		index++;
 	}
 	process->operation.op_size += 1;
@@ -191,9 +193,12 @@ int	ft_load_arguments_value(t_vm_process *process, t_vm_arena *arena)
 		else if (process->operation.args[index].type == IND_CODE)
 			size = IND_SIZE;
 		else if (process->operation.args[index].type == DIR_CODE)
-            size = DIR_SIZE - (2 * op_data->label_size);
-		ft_get_mem_int(&(process->operation.args[index].value),
-				size, mem);
+			size = DIR_SIZE - (2 * op_data->label_size);
+		process->operation.args[index].value = ft_read_memory_address(arena,
+			(process->current_position + process->operation.op_size) % MEM_SIZE,
+			size);
+		/*ft_get_mem_int(&(process->operation.args[index].value),
+				size, mem);*/
 		mem += size;
 		process->operation.op_size += size;
 		index++;
@@ -208,7 +213,13 @@ int	ft_parse_operation_arguments(t_vm_process *process, t_vm_arena *arena)
 	op_data = &g_op_tab[process->operation.op_code - 1];
 	process->operation.op_size = 1;
 	if (op_data->octet_codage)
-		ft_get_arguments_types(process, arena);
+	{
+		if (!ft_get_arguments_types(process, arena))
+		{
+			process->operation.op_size++;
+			return (ERROR);
+		}
+	}
 	else
 		ft_load_arguments_types(process);
 	ft_load_arguments_value(process, arena);
@@ -225,46 +236,47 @@ int	ft_parse_operation(t_vm_process *process, t_vm_arena *arena)
 	if (!ft_valid_opcode(operation->op_code))
 		return (ERROR);
 	// printf("OPCODE IS VALID\n");
-	ft_parse_operation_arguments(process, arena);
+	if (!ft_parse_operation_arguments(process, arena))
+		return (ERROR);
 	// printf("PARSED ARGUMENTS\n");
 	return (SUCCESS);
 }
 
 void ft_debug_print(char *str)
 {
-    static int fd = -1;
+	static int fd = 1;
 
-    if (fd == -1) {
-        fd = open("/dev/ttys001", O_WRONLY);
-    }
-    ft_putstr_fd(str, fd);
+	if (fd == -1) {
+		fd = open("/dev/ttys001", O_WRONLY);
+	}
+	ft_putstr_fd(str, fd);
 }
 
-void	debug_print_operation(t_vm_operation operation)
+void	debug_print_operation(t_vm_operation operation, int id)
 {
 	t_op	*op_data;
 	int		index;
-	char    buffer[2048];
+	char	buffer[2048];
 
 	op_data = &g_op_tab[operation.op_code - 1];
-	sprintf(buffer, "\t%s ", op_data->name);
-    ft_debug_print(buffer);
+	sprintf(buffer, "P\t%d | %s ", id, op_data->name);
+	ft_debug_print(buffer);
 	index = 0;
 	while (index < op_data->args_number)
 	{
 		if (operation.args[index].type == REG_CODE)
 			sprintf(buffer, "r%d ", operation.args[index].value.int1);
 		else if (operation.args[index].type == DIR_CODE && op_data->label_size)
-			sprintf(buffer, "%%%d ", ft_short_endian(operation.args[index].value.int2));
+			sprintf(buffer, "%d ", operation.args[index].value.int2);
 		else if (operation.args[index].type == DIR_CODE)
-			sprintf(buffer, "%%%d ", ft_int_endian(operation.args[index].value.int4));
+			sprintf(buffer, "%d ", operation.args[index].value.int4);
 		else if (operation.args[index].type == IND_CODE)
-			sprintf(buffer, "%d ", ft_int_endian(operation.args[index].value.int4));
+			sprintf(buffer, "%d ", operation.args[index].value.int2);
 		index++;
-        ft_debug_print(buffer);
-        sprintf(buffer, "\n");
-        ft_debug_print(buffer);
+		ft_debug_print(buffer);
 	}
+	sprintf(buffer, "\n");
+	ft_debug_print(buffer);
 }
 
 int	ft_execute_instruction(t_vm_env *env, t_vm_process *process, t_vm_arena
@@ -272,10 +284,12 @@ int	ft_execute_instruction(t_vm_env *env, t_vm_process *process, t_vm_arena
 {
 	// printf("PARSING INSTRUCTION\n");
 	if (!ft_parse_operation(process, arena))
-        return (ERROR);
+		return (ERROR);
+//	printf("EXECUTING OPERATION : %s at cycle : %ld\n", process->operation.op_data->name,
+//			env->settings.cycles_number);
+	if (!(env->init.flags & (FLAG_visualizer | FLAG_dump)))
+		debug_print_operation(process->operation, process->id + 1);
 	if (process->operation.op_data)
-	    process->operation.op_data->exec(env, process);
-	process->remaining_cycles = process->operation.op_data->cycle_number + 1;
-	//debug_print_operation(process->operation);
-    return (SUCCESS);
+		process->operation.op_data->exec(env, process);
+	return (SUCCESS);
 }

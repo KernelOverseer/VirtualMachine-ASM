@@ -12,7 +12,7 @@
 
 #include "virtual_machine.h"
 
-t_op	g_op_tab[17] =
+t_op	g_op_tab[OPERATION_COUNT] =
 {
 	{"live", 1, {T_DIR}, 1, 10, "alive", 0, 0, ft_exec_live},
 	{"ld", 2, {T_DIR | T_IND, T_REG}, 2, 5, "load", 1, 0, ft_exec_ld},

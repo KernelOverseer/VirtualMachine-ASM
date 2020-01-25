@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   virtual_machine.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slyazid <slyazid@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 18:59:55 by abiri             #+#    #+#             */
-/*   Updated: 2020/01/06 02:47:33 by slyazid          ###   ########.fr       */
+/*   Updated: 2020/01/25 21:51:35 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_op t_op;
 typedef struct	s_vm_init
 {
 	int			flags;
+	int			dump_cycle;
 	t_list_head	players;
 }				t_vm_init;
 
@@ -69,6 +70,8 @@ typedef struct  s_vm_process
     long			    last_live_cycle;
     long			    remaining_cycles;
     int				    current_position;
+    int                 last_position;
+    int                 born_cycle;
 	t_vm_operation	    operation;
     struct  s_vm_arena  *arena;
     t_vm_player         *player;
@@ -149,6 +152,7 @@ int ft_add_process(t_vm_env *env, int address, t_vm_player *player);
 int ft_main_vm_loop(t_vm_env *env);
 int ft_execute_instruction(t_vm_env *env, t_vm_process *process,
         t_vm_arena *arena);
+int ft_op_wait(t_vm_process *process, t_vm_arena *arena);
 
 /*
 **  OPERATION FUNCTIONS
@@ -170,6 +174,16 @@ int	ft_exec_sti(t_vm_env *env, t_vm_process *process);
 int	ft_exec_sub(t_vm_env *env, t_vm_process *process);
 int	ft_exec_xor(t_vm_env *env, t_vm_process *process);
 int	ft_exec_zjmp(t_vm_env *env, t_vm_process *process);
+
+/*
+** HELPER FUNCTIONS
+*/
+
+int ft_valid_opcode(int opcode);
+int	ft_modulus(int value, int modulus);
+int	ft_limit_address(int value);
+int	ft_set_memory_dump(void *arg, int flag_index, char **params);
+int	ft_dump_memory(t_vm_env *env);
 
 /*
 **  MEMORY ACCESS FUNCTIONS

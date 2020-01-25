@@ -6,7 +6,7 @@
 #    By: abiri <kerneloverseer@pm.me>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/29 18:16:57 by abiri             #+#    #+#              #
-#    Updated: 2020/01/05 23:19:57 by abiri            ###   ########.fr        #
+#    Updated: 2020/01/23 05:05:07 by abiri            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,25 @@ VIRTUAL_MACHINE_SRC_NAMES =	general_tools.c\
 							init/player_args.c\
 							init/player_loading.c\
 							init/vm_process_init.c\
+							instructions/exec_add.c\
+							instructions/exec_aff.c\
+							instructions/exec_and.c\
+							instructions/exec_fork.c\
+							instructions/exec_ld.c\
+							instructions/exec_ldi.c\
+							instructions/exec_lfork.c\
+							instructions/exec_live.c\
+							instructions/exec_lld.c\
+							instructions/exec_lldi.c\
+							instructions/exec_or.c\
+							instructions/exec_st.c\
+							instructions/exec_sti.c\
+							instructions/exec_sub.c\
+							instructions/exec_xor.c\
+							instructions/exec_zjmp.c\
 							main.c\
 							main_loop.c\
+							memory_dump.c\
 							parsing/general_parsing_tools.c\
 							processes/memory_access.c\
 							processes/process_execution.c\

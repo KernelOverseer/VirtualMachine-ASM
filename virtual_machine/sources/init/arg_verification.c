@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arg_verification.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abiri <abiri@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 15:21:14 by abiri             #+#    #+#             */
-/*   Updated: 2020/01/13 13:49:33 by abiri            ###   ########.fr       */
+/*   Updated: 2020/01/23 04:56:46 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 const	t_flag_description	g_flags_data[] =
 {
-	{"dump", ft_activate_flag_bit, FLAG_dump},
+	{"dump", ft_set_memory_dump, FLAG_dump},
 	{"v", ft_activate_flag_bit, FLAG_visualizer},
 	{"n", ft_player_add_order, FLAG_player_number}
 };

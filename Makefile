@@ -6,12 +6,12 @@
 #    By: abiri <kerneloverseer@pm.me>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/29 18:57:44 by abiri             #+#    #+#              #
-#    Updated: 2019/12/30 15:03:17 by abiri            ###   ########.fr        #
+#    Updated: 2020/01/17 11:08:29 by abiri            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-FLAGS = -Wall -Werror -Wextra
+FLAGS = #-Wall -Werror -Wextra
 
 .PHONY: all
 all: main
