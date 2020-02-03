@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 04:29:59 by abiri             #+#    #+#             */
-/*   Updated: 2020/01/26 00:08:21 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/02 04:11:48 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int ft_set_memory(t_vm_process *process, t_vm_argument *argument, t_intat value)
 	arena = process->arena;
 	if (argument->type == REG_CODE)
 	{
-		if (argument->value.int1 > REG_NUMBER || argument->value.int1 < 0)
+		if (argument->value.int1 > REG_NUMBER || argument->value.int1 < 1)
 			return (ERROR);
 		process->registers[argument->value.int1 - 1] = ft_int_endian(value.int4);
 	}
@@ -88,7 +88,7 @@ int ft_get_memory(t_vm_process *process, t_vm_argument *argument, int *status)
 	*status = 1;
 	if (argument->type == REG_CODE)
 	{
-		if (argument->value.int1 > REG_NUMBER || argument->value.int1 < 0)
+		if (argument->value.int1 > REG_NUMBER || argument->value.int1 < 1)
 			return ((*status = ERROR));
 		return (ft_int_endian(process->registers[argument->value.int1 - 1]));
 	}
@@ -100,8 +100,8 @@ int ft_get_memory(t_vm_process *process, t_vm_argument *argument, int *status)
 	}
 	else if (argument->type == IND_CODE)
 	{
-		return (ft_read_memory_address(arena, process->current_position +
-			argument->value.int2, 4).int4);
+		return (ft_read_memory_address(arena, ft_modulus(process->current_position +
+			argument->value.int2, MEM_SIZE), 4).int4);
 	}
 
 	return ((*status = 0));

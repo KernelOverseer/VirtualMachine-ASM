@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 18:59:55 by abiri             #+#    #+#             */
-/*   Updated: 2020/01/25 21:51:35 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/03 02:38:15 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct	s_vm_operation
 	t_vm_argument	args[MAX_ARGS_NUMBER];
 	int		op_size;
 	t_op    *op_data;
+    int     error;
 }		t_vm_operation;
 
 
@@ -69,6 +70,7 @@ typedef struct  s_vm_process
     u_int8_t		    carry:1;
     long			    last_live_cycle;
     long			    remaining_cycles;
+    int                 is_live;
     int				    current_position;
     int                 last_position;
     int                 born_cycle;
@@ -152,7 +154,7 @@ int ft_add_process(t_vm_env *env, int address, t_vm_player *player);
 int ft_main_vm_loop(t_vm_env *env);
 int ft_execute_instruction(t_vm_env *env, t_vm_process *process,
         t_vm_arena *arena);
-int ft_op_wait(t_vm_process *process, t_vm_arena *arena);
+int ft_op_wait(t_vm_process *process, t_vm_arena *arena, int newborn);
 
 /*
 **  OPERATION FUNCTIONS
@@ -198,5 +200,6 @@ int     ft_set_memory(t_vm_process *process, t_vm_argument *argument,
 t_intat ft_read_memory_address(t_vm_arena *arena, int address, int size);
 void    ft_write_memory_address(t_vm_arena *arena, int address, int size,
                                 int value);
+int     ft_parse_operation(t_vm_process *process, t_vm_arena *arena);
 
 #endif

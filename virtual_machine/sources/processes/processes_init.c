@@ -23,6 +23,7 @@ t_vm_process *ft_new_vm_process(int player_id)
 	result->carry = FALSE;
 	result->registers[0] = -player_id;
 	result->last_position = -1;
+	result->operation.op_size = 1;
 	return (result);
 }
 
@@ -36,6 +37,6 @@ int ft_add_process(t_vm_env *env, int address, t_vm_player *player)
 	process->player = player;
 	process->current_position = address;
 	process->born_cycle = env->settings.cycles_number;
-	env->arena.processes.push(&env->arena.processes, process);
+	env->arena.processes.push_front(&env->arena.processes, process);
 	return (SUCCESS);
 }

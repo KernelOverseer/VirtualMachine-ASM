@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 23:14:11 by abiri             #+#    #+#             */
-/*   Updated: 2020/01/25 21:35:22 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/01 06:25:21 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ static void	ft_copy_process(t_vm_process *parent, t_vm_process *new)
 	index = -1;
 	while (++index < REG_NUMBER)
 		new->registers[index] = parent->registers[index];
-	new->remaining_cycles = ft_op_wait(new, parent->arena) - 1;
-	new->operation.op_size = 0;
+	new->remaining_cycles = ft_op_wait(new, parent->arena, 1) - 1;
 }
 
 int	ft_exec_fork(t_vm_env *env, t_vm_process *process)
@@ -36,7 +35,8 @@ int	ft_exec_fork(t_vm_env *env, t_vm_process *process)
 	new_addr = ft_get_memory(process, &process->operation.args[0], &status);
 	new_addr = ft_modulus(ft_limit_address(new_addr) + process->current_position, MEM_SIZE);
 	ft_add_process(env, new_addr, process->player);
-	new_process = env->arena.processes.last->content;
+	new_process = env->arena.processes.first->content;
 	ft_copy_process(process, new_process);
+	//ft_printf("new process %d is on : %d supposed to be on %d\n", new_process->id + 1, new_process->current_position, new_addr);
 	return (SUCCESS);
 }

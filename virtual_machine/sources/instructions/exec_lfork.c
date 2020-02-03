@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 23:14:17 by abiri             #+#    #+#             */
-/*   Updated: 2020/01/25 20:06:09 by abiri            ###   ########.fr       */
+/*   Updated: 2020/01/30 09:17:48 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	ft_copy_process(t_vm_process *parent, t_vm_process *new)
 	index = -1;
 	while (++index < REG_NUMBER)
 		new->registers[index] = parent->registers[index];
-	new->remaining_cycles = 1;
+	new->remaining_cycles = ft_op_wait(new, parent->arena, 1) - 1;
 }
 
 int	ft_exec_lfork(t_vm_env *env, t_vm_process *process)
@@ -33,9 +33,9 @@ int	ft_exec_lfork(t_vm_env *env, t_vm_process *process)
 	int				new_addr;
 
 	new_addr = ft_get_memory(process, &process->operation.args[0], &status);
-	new_addr = (new_addr + process->current_position);
+	new_addr = ft_modulus(new_addr + process->current_position, MEM_SIZE);
 	ft_add_process(env, new_addr, process->player);
-	new_process = env->arena.processes.last->content;
+	new_process = env->arena.processes.first->content;
 	ft_copy_process(process, new_process);
 	return (SUCCESS);
 }

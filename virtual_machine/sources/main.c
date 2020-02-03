@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abiri <abiri@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 13:49:14 by abiri             #+#    #+#             */
-/*   Updated: 2020/01/13 13:49:22 by abiri            ###   ########.fr       */
+/*   Updated: 2020/01/29 06:45:57 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	main(int argc, char **argv)
 		return (-1);
 	if (vm_env->init.flags & FLAG_visualizer)
 		ft_visualizer_init(vm_env);
+	ft_printf("Introducing contestants...\n* Player 1, weighing 325 bytes, \"Celebration Funebre v0.99pl42\" (\"Jour J\") !\n");
 	ft_main_vm_loop(vm_env);
 	return (0);
 }

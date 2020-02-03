@@ -16,10 +16,13 @@ int	ft_exec_live(t_vm_env *env, t_vm_process *process)
 {
 	int player_code;
 
+	ft_printf("live from process %d on position %d cycle %d\n", process->id + 1, process->current_position, env->settings.cycles_number);
+	player_code = -process->operation.args[0].value.int4;
+	process->is_live = 1;
+	if (player_code > 0 || player_code <= env->init.players.size)
+		env->settings.last_alive = player_code;
+	//env->settings.last_alive = player_code;
 	process->last_live_cycle = env->settings.cycles_number;
-	player_code = process->operation.args[0].value.int4;
-	if (player_code < 1 || player_code > MAX_PLAYERS)
-		return (ERROR);
-	env->settings.last_alive = player_code;
+	env->settings.lives_in_cycle++;
 	return (SUCCESS);
 }
