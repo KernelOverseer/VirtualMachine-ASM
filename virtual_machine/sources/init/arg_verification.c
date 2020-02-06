@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 15:21:14 by abiri             #+#    #+#             */
-/*   Updated: 2020/01/23 04:56:46 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/06 16:18:47 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,21 @@ const	t_flag_description	g_flags_data[] =
 	{"n", ft_player_add_order, FLAG_player_number}
 };
 
-int	ft_activate_flag_bit(void *arg, int flag_index, char **params)
+char	*ft_check_file_extension(char *filename, char *extension)
+{
+	char *ext;
+
+	if (!filename)
+		return (NULL);
+	ext = ft_strrchr(filename, '.');
+	if (ext == filename || !ext)
+		return (NULL);
+	if (ft_strequ(ext, extension))
+		return (ext);
+	return (NULL);
+}
+
+int		ft_activate_flag_bit(void *arg, int flag_index, char **params)
 {
 	t_vm_env	*vm_env;
 
@@ -29,7 +43,7 @@ int	ft_activate_flag_bit(void *arg, int flag_index, char **params)
 	return (1);
 }
 
-int	ft_process_flag(t_vm_env *vm_env, char *flag, char **args)
+int		ft_process_flag(t_vm_env *vm_env, char *flag, char **args)
 {
 	int							index;
 	const t_flag_description	*flag_data;
@@ -45,7 +59,7 @@ int	ft_process_flag(t_vm_env *vm_env, char *flag, char **args)
 	return (ft_raise_exception(ERROR_wrong_flag, flag));
 }
 
-int	ft_check_args(t_vm_env *vm_env, int argc, char **argv)
+int		ft_check_args(t_vm_env *vm_env, int argc, char **argv)
 {
 	int	index;
 	int	index_jump;
@@ -62,7 +76,7 @@ int	ft_check_args(t_vm_env *vm_env, int argc, char **argv)
 				return (0);
 		}
 		else if (!ft_add_new_player(vm_env, argv[index]))
-		    return (0);
+			return (0);
 		index += index_jump;
 	}
 	return (1);

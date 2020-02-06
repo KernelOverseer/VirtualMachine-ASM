@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 04:57:05 by abiri             #+#    #+#             */
-/*   Updated: 2020/01/23 05:28:32 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/06 17:04:36 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,18 @@ int	ft_set_memory_dump(void *arg, int flag_index, char **params)
 	t_vm_env	*env;
 	int			cycle_number;
 
+	(void)flag_index;
 	env = arg;
 	if (!params[0])
-		return (ft_raise_exception(ERROR_wrong_argument, ", try : --dump [cycle_number]"));
+	{
+		return (ft_raise_exception(ERROR_wrong_argument,
+			", try : --dump [cycle_number]"));
+	}
 	if (!ft_parse_int(params[0], &cycle_number))
-		return (ft_raise_exception(ERROR_wrong_argument, ", [cycle_number] should be an integer"));
+	{
+		return (ft_raise_exception(ERROR_wrong_argument,
+			", [cycle_number] should be an integer"));
+	}
 	env->init.flags |= FLAG_dump;
 	env->init.dump_cycle = cycle_number;
 	return (2);

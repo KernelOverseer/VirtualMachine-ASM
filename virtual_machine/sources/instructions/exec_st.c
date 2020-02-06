@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   exec_st.c										  :+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: abiri <kerneloverseer@pm.me>			   +#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2020/01/07 23:14:50 by abiri			 #+#	#+#			 */
-/*   Updated: 2020/01/23 00:44:00 by abiri            ###   ########.fr       */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_st.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/06 16:10:25 by abiri             #+#    #+#             */
+/*   Updated: 2020/02/06 16:23:34 by abiri            ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "virtual_machine.h"
@@ -16,8 +16,8 @@ int	ft_exec_st(t_vm_env *env, t_vm_process *process)
 {
 	t_intat value;
 	int		status;
-	int		offset;
 
+	(void)env;
 	status = SUCCESS;
 	value.int4 = ft_get_memory(process, &process->operation.args[0], &status);
 	if (!status)

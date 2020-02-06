@@ -6,26 +6,16 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 04:29:59 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/02 04:11:48 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/06 15:51:54 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "virtual_machine.h"
 
-int	ft_int_endian(int i)
+t_intat	ft_read_memory_address(t_vm_arena *arena, int address, int size)
 {
-	return (((i >> 24) & 0xFF) | ((i >> 8) & 0xFF00) | ((i << 8) & 0xFF0000) | ((i << 24) & 0xFF000000));
-}
-
-short  ft_short_endian(short i)
-{
-	return ((i >> 8 | i << 8) & 0xFFFF);
-}
-
-t_intat ft_read_memory_address(t_vm_arena *arena, int address, int size)
-{
-	int i;
-	t_intat result;
+	t_intat	result;
+	int		i;
 
 	i = 0;
 	result.int4 = 0;
@@ -59,20 +49,23 @@ void	ft_write_memory_address(t_vm_arena *arena, int address, int size,
 	}
 }
 
-int ft_set_memory(t_vm_process *process, t_vm_argument *argument, t_intat value)
+int		ft_set_memory(t_vm_process *process, t_vm_argument *argument,
+	t_intat value)
 {
-	t_vm_arena  *arena;
+	t_vm_arena	*arena;
 
 	arena = process->arena;
 	if (argument->type == REG_CODE)
 	{
 		if (argument->value.int1 > REG_NUMBER || argument->value.int1 < 1)
 			return (ERROR);
-		process->registers[argument->value.int1 - 1] = ft_int_endian(value.int4);
+		process->registers[argument->value.int1 - 1] =
+			ft_int_endian(value.int4);
 	}
 	else if (argument->type == IND_CODE)
 	{
-		ft_write_memory_address(arena, ft_modulus(process->current_position + argument->value.int4,
+		ft_write_memory_address(arena,
+		ft_modulus(process->current_position + argument->value.int4,
 			MEM_SIZE), 4, value.int4);
 	}
 	else
@@ -80,9 +73,10 @@ int ft_set_memory(t_vm_process *process, t_vm_argument *argument, t_intat value)
 	return (SUCCESS);
 }
 
-int ft_get_memory(t_vm_process *process, t_vm_argument *argument, int *status)
+int		ft_get_memory(t_vm_process *process, t_vm_argument *argument,
+	int *status)
 {
-	t_vm_arena  *arena;
+	t_vm_arena	*arena;
 
 	arena = process->arena;
 	*status = 1;
@@ -100,9 +94,9 @@ int ft_get_memory(t_vm_process *process, t_vm_argument *argument, int *status)
 	}
 	else if (argument->type == IND_CODE)
 	{
-		return (ft_read_memory_address(arena, ft_modulus(process->current_position +
+		return (ft_read_memory_address(arena,
+			ft_modulus(process->current_position +
 			argument->value.int2, MEM_SIZE), 4).int4);
 	}
-
 	return ((*status = 0));
 }

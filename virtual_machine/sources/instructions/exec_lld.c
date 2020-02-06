@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   exec_lld.c										 :+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: abiri <abiri@student.42.fr>				+#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2020/01/07 23:14:19 by abiri			 #+#	#+#			 */
-/*   Updated: 2020/01/19 06:12:01 by abiri			###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_lld.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/06 16:10:04 by abiri             #+#    #+#             */
+/*   Updated: 2020/02/06 16:22:32 by abiri            ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "virtual_machine.h"
@@ -17,6 +17,7 @@ int	ft_exec_lld(t_vm_env *env, t_vm_process *process)
 	int		status;
 	t_intat	value;
 
+	(void)env;
 	value.int4 = 0;
 	if (!(process->operation.args[1].type == REG_CODE))
 		return (ERROR);

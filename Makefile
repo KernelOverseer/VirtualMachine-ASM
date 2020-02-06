@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abiri <kerneloverseer@pm.me>               +#+  +:+       +#+         #
+#    By: abiri <abiri@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/29 18:57:44 by abiri             #+#    #+#              #
-#    Updated: 2020/01/17 11:08:29 by abiri            ###   ########.fr        #
+#    Updated: 2020/02/06 16:19:47 by abiri            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-FLAGS = #-Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra
 
 .PHONY: all
 all: main
