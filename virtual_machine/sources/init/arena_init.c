@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 15:13:00 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/06 16:20:09 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/08 23:20:14 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,18 @@ void	ft_init_game(t_vm_env *env)
 	env->settings.cycles_to_die = CYCLE_TO_DIE;
 	env->settings.number_of_checks = 0;
 	env->settings.number_of_checks_from_last_change = 0;
+}
+
+int		ft_init_vm_settings(t_vm_env *vm_env)
+{
+	if (!ft_load_players(vm_env))
+		return (ERROR);
+	vm_env->settings.last_alive = vm_env->init.players.size;
+	vm_env->settings.cycles_number = 0;
+	vm_env->settings.lives_in_cycle = 0;
+	vm_env->settings.cycles_to_die = CYCLE_TO_DIE;
+	vm_env->settings.number_of_checks = 0;
+	return (SUCCESS);
 }
 
 int		ft_load_players_on_arena(t_vm_env *vm_env)

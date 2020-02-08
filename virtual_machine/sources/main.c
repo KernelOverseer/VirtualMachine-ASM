@@ -5,15 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/13 13:49:14 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/06 15:37:56 by abiri            ###   ########.fr       */
+/*   Created: 2020/02/08 23:18:56 by abiri             #+#    #+#             */
+/*   Updated: 2020/02/08 23:20:02 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "virtual_machine.h"
-#include <stdio.h>
 
-int	ft_load_players(t_vm_env *vm_env)
+int		ft_load_players(t_vm_env *vm_env)
 {
 	t_vm_player *player;
 
@@ -26,19 +25,7 @@ int	ft_load_players(t_vm_env *vm_env)
 	return (SUCCESS);
 }
 
-int	ft_init_vm_settings(t_vm_env *vm_env)
-{
-	if (!ft_load_players(vm_env))
-		return (ERROR);
-	vm_env->settings.last_alive = vm_env->init.players.size;
-	vm_env->settings.cycles_number = 0;
-	vm_env->settings.lives_in_cycle = 0;
-	vm_env->settings.cycles_to_die = CYCLE_TO_DIE;
-	vm_env->settings.number_of_checks = 0;
-	return (SUCCESS);
-}
-
-int	ft_init_env(t_vm_env *vm_env)
+int		ft_init_env(t_vm_env *vm_env)
 {
 	ft_bzero(&(vm_env->arena.memory), MEM_SIZE);
 	ttslist_init(&(vm_env->init.players));
@@ -46,7 +33,34 @@ int	ft_init_env(t_vm_env *vm_env)
 	return (SUCCESS);
 }
 
-int	main(int argc, char **argv)
+void	ft_announce_players(t_vm_env *env)
+{
+	t_vm_player *player;
+
+	ft_printf("Introducing contestants...\n");
+	env->init.players.iterator = env->init.players.first;
+	while ((player = ttslist_iter_content(&env->init.players)))
+		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
+		player->index, player->exec_size, player->name, player->comment);
+}
+
+void	ft_announce_winner(t_vm_env *env)
+{
+	t_vm_player *player;
+
+	env->init.players.iterator = env->init.players.first;
+	while ((player = ttslist_iter_content(&env->init.players)))
+	{
+		if (player->index == env->settings.last_alive)
+		{
+			ft_printf("Contestant %d, \"%s\", has won !\n",
+				player->index, player->name);
+			break ;
+		}
+	}
+}
+
+int		main(int argc, char **argv)
 {
 	t_vm_env	*vm_env;
 
@@ -64,6 +78,8 @@ int	main(int argc, char **argv)
 		return (-1);
 	if (!ft_load_players_on_arena(vm_env))
 		return (-1);
+	ft_announce_players(vm_env);
 	ft_main_vm_loop(vm_env);
+	ft_announce_winner(vm_env);
 	return (0);
 }

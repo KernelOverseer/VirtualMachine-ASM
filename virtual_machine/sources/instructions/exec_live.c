@@ -19,7 +19,7 @@ int	ft_exec_live(t_vm_env *env, t_vm_process *process)
 	(void)env;
 	player_code = -process->operation.args[0].value.int4;
 	process->is_live = 1;
-	if (player_code > 0 || player_code <= (int)env->init.players.size)
+	if (player_code > 0 && player_code <= (int)env->init.players.size)
 		env->settings.last_alive = player_code;
 	process->last_live_cycle = env->settings.cycles_number;
 	env->settings.lives_in_cycle++;

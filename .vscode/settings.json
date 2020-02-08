@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "functional": "cpp",
-        "memory": "cpp"
+        "memory": "cpp",
+        "virtual_machine.h": "c"
     }
 }

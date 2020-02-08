@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 17:09:43 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/06 17:12:49 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/08 23:43:59 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@
 # define FILE_EXTENSION ".cor"
 
 typedef struct s_op	t_op;
+
+// typedef struct	s_vm_visu
+// {
+// }				t_vm_visu;
 
 typedef struct	s_vm_init
 {
@@ -137,13 +141,16 @@ int				ft_add_new_player(t_vm_env	*vm_env, char *filename);
 int				ft_sort_player_list(t_list_head *player_list);
 int				ft_parse_player(t_vm_player *player);
 int				ft_load_players_on_arena(t_vm_env *vm_env);
+void			ft_init_game(t_vm_env *env);
+int				ft_load_players(t_vm_env *vm_env);
+int				ft_init_vm_settings(t_vm_env *vm_env);
 
 /*
 **  VISUALIZATION FUNCTIONS
 */
 
-int				ft_visualizer_init(t_vm_env *vm_env);
-
+int		ft_init_visualiser(t_vm_env *env);
+void	ft_visualiser_update_value(t_vm_arena *arena, int offset, int size);
 /*
 **  EXECUTION FUNCTIONS
 */

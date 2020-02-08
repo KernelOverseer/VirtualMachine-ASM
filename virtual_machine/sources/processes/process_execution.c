@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 15:47:25 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/06 17:02:59 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/08 22:40:01 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 int	ft_execute_instruction(t_vm_env *env, t_vm_process *process, t_vm_arena
 	*arena)
 {
-	if (process->operation.op_data || ft_get_arguments_types(process, arena))
+	if (process->operation.op_data ||
+		(ft_valid_opcode(process->operation.op_code) &&
+			ft_get_arguments_types(process, arena)))
 	{
 		process->operation.op_size = 1;
 		ft_bzero(&process->operation.args, sizeof(process->operation.args));
