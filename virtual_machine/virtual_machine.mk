@@ -6,7 +6,7 @@
 #    By: abiri <abiri@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/29 18:16:57 by abiri             #+#    #+#              #
-#    Updated: 2020/02/08 23:44:27 by abiri            ###   ########.fr        #
+#    Updated: 2020/02/08 23:46:46 by abiri            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,8 @@ parsing/general_parsing_tools.c\
 processes/memory_access.c\
 processes/operation_parser.c\
 processes/process_execution.c\
-processes/processes_init.c
+processes/processes_init.c\
+visualizer/visualizer_init.c
 
 # AUTOMATIC PART
 

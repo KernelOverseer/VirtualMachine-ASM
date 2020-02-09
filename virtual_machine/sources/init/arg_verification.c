@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 15:21:14 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/06 16:18:47 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/09 04:57:59 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ const	t_flag_description	g_flags_data[] =
 {
 	{"dump", ft_set_memory_dump, FLAG_dump},
 	{"v", ft_activate_flag_bit, FLAG_visualizer},
-	{"n", ft_player_add_order, FLAG_player_number}
+	{"n", ft_player_add_order, FLAG_player_number},
+	{"s", ft_activate_flag_bit, FLAG_simple_visualiser}
 };
 
 char	*ft_check_file_extension(char *filename, char *extension)

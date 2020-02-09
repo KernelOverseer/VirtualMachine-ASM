@@ -21,7 +21,7 @@ t_vm_process	*ft_new_vm_process(int player_id)
 		return (NULL + ft_raise_exception(ERROR_allocation_problem, NULL));
 	result->id = process_id++;
 	result->carry = FALSE;
-	result->registers[0] = -player_id;
+	result->registers[0] = ft_int_endian(-player_id);
 	result->last_position = -1;
 	result->operation.op_size = 1;
 	return (result);

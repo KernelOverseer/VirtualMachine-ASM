@@ -2,6 +2,19 @@
     "files.associations": {
         "functional": "cpp",
         "memory": "cpp",
-        "virtual_machine.h": "c"
+        "virtual_machine.h": "c",
+        "sstream": "c",
+        "__hash_table": "c",
+        "__split_buffer": "c",
+        "array": "c",
+        "bitset": "c",
+        "string_view": "c",
+        "initializer_list": "c",
+        "iterator": "c",
+        "string": "c",
+        "unordered_map": "c",
+        "utility": "c",
+        "vector": "c",
+        "hashtable": "c"
     }
 }

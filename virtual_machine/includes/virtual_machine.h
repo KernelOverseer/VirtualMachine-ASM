@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 17:09:43 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/08 23:43:59 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/09 07:38:28 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@
 # include "op.h"
 # include "visualizer.h"
 # include "error_management.h"
+# include <time.h>
 # define FILE_EXTENSION ".cor"
 
 typedef struct s_op	t_op;
-
-// typedef struct	s_vm_visu
-// {
-// }				t_vm_visu;
 
 typedef struct	s_vm_init
 {
 	int			flags;
 	int			dump_cycle;
+	int			visu_frame;
+	int			visu_stop;
+	int			cycle_skip;
 	t_list_head	players;
 }				t_vm_init;
 
@@ -41,6 +41,7 @@ typedef struct	s_vm_players
 	char			*comment;
 	int				exec_size;
 	unsigned char	*exec_code;
+	int				last_live;
 }				t_vm_player;
 
 typedef union	u_intat
@@ -95,6 +96,7 @@ typedef struct	s_vm_settings
 typedef struct	s_vm_arena
 {
 	unsigned char	memory[MEM_SIZE];
+	char			colors[MEM_SIZE];
 	t_list_head		processes;
 }				t_vm_arena;
 
@@ -149,8 +151,9 @@ int				ft_init_vm_settings(t_vm_env *vm_env);
 **  VISUALIZATION FUNCTIONS
 */
 
-int		ft_init_visualiser(t_vm_env *env);
-void	ft_visualiser_update_value(t_vm_arena *arena, int offset, int size);
+void			ft_init_visualiser(t_vm_env *env);
+void			ft_visualiser_update_value(t_vm_env *env, int offset, int color, int size);
+void			ft_visualiser_draw(t_vm_env *env);
 /*
 **  EXECUTION FUNCTIONS
 */

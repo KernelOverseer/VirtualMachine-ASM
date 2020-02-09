@@ -6,20 +6,21 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 15:43:02 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/06 17:06:34 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/09 04:57:00 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FLAG_PROCESSING_H
 # define FLAG_PROCESSING_H
-# define FLAG_COUNT 3
+# define FLAG_COUNT 4
 # define PLAYER_INDEX_NONE -1
 
 enum	e_commandline_flags
 {
 	FLAG_player_number = 1,
 	FLAG_dump = 2,
-	FLAG_visualizer = 4
+	FLAG_visualizer = 4,
+	FLAG_simple_visualiser = 8
 };
 
 typedef int				t_flag_processor(void *env, int flag_index,

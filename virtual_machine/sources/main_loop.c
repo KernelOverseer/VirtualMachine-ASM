@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 15:14:14 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/08 22:14:01 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/09 09:14:11 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int	ft_execute_processes(t_vm_env *env)
 	{
 		process->current_position = ft_modulus(process->current_position,
 			MEM_SIZE);
+		ft_visualiser_update_value(env, process->current_position,
+			process->player->index + 4, 1);
 		if (process->current_position != process->last_position)
 			process->remaining_cycles = ft_op_wait(process, &env->arena, 0) - 1;
 		else if (process->remaining_cycles <= 0)
@@ -60,10 +62,15 @@ int	ft_execute_processes(t_vm_env *env)
 			ft_execute_instruction(env, process, &env->arena);
 			process->last_position = -1;
 			process->current_position += process->operation.op_size;
+			ft_visualiser_update_value(env, process->current_position,
+				process->player->index + 4, 1);
+			ft_visualiser_update_value(env, process->current_position,
+				-env->arena.colors[ft_modulus(process->current_position, MEM_SIZE)], 1);
 			process->operation.op_size = 1;
 		}
 		process->remaining_cycles--;
 	}
+	ft_visualiser_draw(env);
 	if (env->init.flags & FLAG_dump &&
 		env->init.dump_cycle == env->settings.cycles_number)
 		return (0 * ft_dump_memory(env));
@@ -84,7 +91,10 @@ int	ft_remove_dead_processes(t_vm_env *env)
 		next_node = node->next;
 		process = node->content;
 		if (env->settings.cycles_to_die <= 0 || !process->is_live)
+		{
 			ttslist_splice(&env->arena.processes, node);
+			free(process);
+		}
 		else
 			process->is_live = 0;
 		node = next_node;
