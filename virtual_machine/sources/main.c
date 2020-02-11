@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 23:18:56 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/11 07:36:21 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/11 21:24:01 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_announce_players(t_vm_env *env)
 {
 	t_vm_player *player;
 
-	if (env->init.flags & FLAG_simple_visualiser)
+	if (env->init.flags & FLAG_visualizer)
 		return ;
 	ft_printf("Introducing contestants...\n");
 	env->init.players.iterator = env->init.players.first;
@@ -54,7 +54,10 @@ void	ft_announce_winner(t_vm_env *env)
 	if (env->init.flags & FLAG_dump)
 		return ;
 	if (env->init.flags & FLAG_visualizer)
+	{
+		endwin();
 		return ;
+	}
 	env->init.players.iterator = env->init.players.first;
 	while ((player = ttslist_iter_content(&env->init.players)))
 	{
@@ -90,6 +93,5 @@ int		main(int argc, char **argv)
 	ft_visualiser_draw(vm_env);
 	ft_main_vm_loop(vm_env);
 	ft_announce_winner(vm_env);
-	endwin();
 	return (0);
 }
