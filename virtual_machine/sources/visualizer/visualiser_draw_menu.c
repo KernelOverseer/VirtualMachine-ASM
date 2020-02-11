@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 07:16:39 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/11 07:24:28 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/11 21:57:15 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void		ft_visualiser_draw_info(t_vm_env *env)
 	ft_write_field(&offset, padding, "Speed", env->init.cycle_skip);
 	ft_write_field(&offset, padding, "Cycles", env->settings.cycles_number);
 	ft_write_field(&offset, padding, "Processes", env->arena.processes.size);
-	ft_write_field(&offset, padding, "Processes", env->settings.cycles_to_die);
+	ft_write_field(&offset, padding, "Cycles to die",
+		env->settings.cycles_to_die);
 	offset += 5;
 	env->init.players.iterator = env->init.players.first;
 	while ((player = ttslist_iter_content(&env->init.players)))

@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 07:18:55 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/11 07:25:25 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/11 21:42:21 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void	ft_visualiser_highlight_process(t_vm_env *env, t_vm_process *process)
 	if (env->settings.cycles_number % env->init.cycle_skip)
 		return ;
 	color = env->arena.colors[ft_modulus(process->current_position, MEM_SIZE)];
-	if (color == 0)
-		color = RAW_CURSOR_MODE;
-	else if (color <= MAX_PLAYERS && color > 0)
+	if (color <= MAX_PLAYERS && color > 0)
 		color += 4;
+	else if (color == 0)
+		color = RAW_CURSOR_MODE;
 	env->arena.colors[ft_modulus(process->current_position, MEM_SIZE)] = color;
 }
 
@@ -76,7 +76,7 @@ void	ft_visualiser_handle_keys(t_vm_env *env)
 			env->init.visu_stop = -env->init.visu_stop;
 		else if (c == 's')
 			env->init.cycle_skip = 1;
-		if (env->init.cycle_skip < 0)
+		if (env->init.cycle_skip <= 0)
 			env->init.cycle_skip = 1;
 		ft_visualiser_draw_info(env);
 		if (env->init.visu_stop >= 0)

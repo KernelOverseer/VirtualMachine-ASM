@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 17:09:43 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/11 07:35:44 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/11 21:54:54 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,8 +187,7 @@ int				ft_add_process(t_vm_env *env, int address, t_vm_player *player);
 int				ft_main_vm_loop(t_vm_env *env);
 int				ft_execute_instruction(t_vm_env *env, t_vm_process *process,
 		t_vm_arena *arena);
-int				ft_op_wait(t_vm_process *process, t_vm_arena *arena,
-		int newborn);
+int				ft_op_wait(t_vm_env *env, t_vm_process *process, int newborn);
 
 /*
 **  OPERATION FUNCTIONS

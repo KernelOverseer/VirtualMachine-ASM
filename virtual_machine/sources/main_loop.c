@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 15:14:14 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/11 07:23:29 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/11 21:58:45 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,22 @@ int	ft_no_lives_from_processes(t_list_head *processes, t_vm_env *env)
 	return (!SUCCESS);
 }
 
-int	ft_op_wait(t_vm_process *process, t_vm_arena *arena, int newborn)
+int	ft_op_wait(t_vm_env *env, t_vm_process *process, int newborn)
 {
 	int	opcode;
 
-	opcode = arena->memory[ft_modulus(process->current_position, MEM_SIZE)];
+	opcode = env->arena.memory[ft_modulus(process->current_position, MEM_SIZE)];
 	process->last_position = process->current_position;
 	process->operation.op_size = 1;
 	if (!ft_valid_opcode(opcode))
 	{
+		ft_visualiser_unhighlight_process(env, process);
 		if (!newborn)
 			process->current_position += 1;
+		ft_visualiser_highlight_process(env, process);
 		return (0);
 	}
-	if (!ft_parse_operation(process, arena))
+	if (!ft_parse_operation(process, &env->arena))
 		process->operation.op_data = NULL;
 	return (g_op_tab[opcode - 1].cycle_number);
 }
@@ -55,7 +57,7 @@ int	ft_execute_processes(t_vm_env *env)
 			MEM_SIZE);
 		ft_visualiser_highlight_process(env, process);
 		if (process->current_position != process->last_position)
-			process->remaining_cycles = ft_op_wait(process, &env->arena, 0) - 1;
+			process->remaining_cycles = ft_op_wait(env, process, 0) - 1;
 		else if (process->remaining_cycles <= 0)
 		{
 			ft_execute_instruction(env, process, &env->arena);

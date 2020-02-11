@@ -6,13 +6,14 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 23:14:11 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/06 16:22:05 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/11 21:54:00 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "virtual_machine.h"
 
-static void	ft_copy_process(t_vm_process *parent, t_vm_process *new)
+static void	ft_copy_process(t_vm_env *env,
+	t_vm_process *parent, t_vm_process *new)
 {
 	int index;
 
@@ -23,7 +24,7 @@ static void	ft_copy_process(t_vm_process *parent, t_vm_process *new)
 	index = -1;
 	while (++index < REG_NUMBER)
 		new->registers[index] = parent->registers[index];
-	new->remaining_cycles = ft_op_wait(new, parent->arena, 1) - 1;
+	new->remaining_cycles = ft_op_wait(env, new, 1) - 1;
 }
 
 int			ft_exec_fork(t_vm_env *env, t_vm_process *process)
@@ -38,6 +39,6 @@ int			ft_exec_fork(t_vm_env *env, t_vm_process *process)
 		process->current_position, MEM_SIZE);
 	ft_add_process(env, new_addr, process->player);
 	new_process = env->arena.processes.first->content;
-	ft_copy_process(process, new_process);
+	ft_copy_process(env, process, new_process);
 	return (SUCCESS);
 }
