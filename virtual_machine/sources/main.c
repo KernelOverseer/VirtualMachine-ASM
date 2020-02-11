@@ -6,10 +6,11 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 23:18:56 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/11 01:56:49 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/11 07:36:21 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "flag_processing.h"
 #include "virtual_machine.h"
 
 int		ft_load_players(t_vm_env *vm_env)

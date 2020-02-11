@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 04:57:05 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/06 17:04:36 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/11 07:21:11 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ int	ft_dump_memory(t_vm_env *env)
 	int	jndex;
 
 	index = 0;
+	if (env->init.flags & FLAG_dump &&
+		env->init.dump_cycle == env->settings.cycles_number)
+		return (ERROR);
 	while (index < (MEM_SIZE / 64))
 	{
 		jndex = 0;

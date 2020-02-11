@@ -6,10 +6,11 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 15:21:14 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/11 06:03:07 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/11 07:34:22 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "flag_processing.h"
 #include "virtual_machine.h"
 
 const	t_flag_description	g_flags_data[] =
@@ -17,8 +18,7 @@ const	t_flag_description	g_flags_data[] =
 	{"dump", ft_set_memory_dump, FLAG_dump},
 	{"v", ft_activate_flag_bit, FLAG_visualizer},
 	{"n", ft_player_add_order, FLAG_player_number},
-	{"s", ft_activate_flag_bit, FLAG_simple_visualiser},
-	{"V", ft_activate_flag_bit, FLAG_verbose}
+	{"s", ft_activate_flag_bit, FLAG_simple_visualiser}
 };
 
 char	*ft_check_file_extension(char *filename, char *extension)

@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 16:09:46 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/09 09:15:50 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/11 07:20:05 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	ft_exec_live(t_vm_env *env, t_vm_process *process)
 	if (player_code > 0 && player_code <= (int)env->init.players.size)
 	{
 		env->settings.last_alive = player_code;
-		if ((player = ttslist_get_id_content(&env->init.players, player_code - 1)))
+		if ((player = ttslist_get_id_content(&env->init.players,
+			player_code - 1)))
 			player->last_live = env->settings.cycles_number;
 		ft_visualiser_update_value(env,
 			process->current_position, -player_code, 5);

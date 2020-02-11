@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 15:14:14 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/11 06:51:11 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/11 07:23:29 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ int	ft_execute_processes(t_vm_env *env)
 	t_vm_process	*process;
 
 	env->arena.processes.iterator = env->arena.processes.first;
-	if (env->init.flags & FLAG_verbose)
-		ft_printf("It is now cycle %d\n", env->settings.cycles_number);
 	while ((process = ttslist_iter_content(&env->arena.processes)))
 	{
 		process->current_position = ft_modulus(process->current_position,
@@ -70,10 +68,7 @@ int	ft_execute_processes(t_vm_env *env)
 		process->remaining_cycles--;
 	}
 	ft_visualiser_draw(env);
-	if (env->init.flags & FLAG_dump &&
-		env->init.dump_cycle == env->settings.cycles_number)
-		return (0 * ft_dump_memory(env));
-	if (env->arena.processes.size == 0)
+	if (env->arena.processes.size == 0 || ft_dump_memory(env))
 		return (ERROR);
 	return (SUCCESS);
 }

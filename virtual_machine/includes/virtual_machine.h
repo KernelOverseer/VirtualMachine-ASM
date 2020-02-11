@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 17:09:43 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/11 02:04:39 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/11 07:35:44 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,26 @@
 # include "ttslist.h"
 # include "libft.h"
 # include "op.h"
-# include "visualizer.h"
 # include "error_management.h"
+# include <ncurses.h>
 # include <time.h>
 # define FILE_EXTENSION ".cor"
+# define BORDER_PADDINGY 2
+# define BORDER_PADDINGX 4
+# define BORDER_MARGINY 2
+# define BORDER_MARGINX 4
+# define INFO_PADDING 2
+# define INFO_WIDTH 40
+# define TEXT_SPEED 1
+# define RAW_CURSOR_MODE 11
+
+enum	e_commandline_flags
+{
+	FLAG_player_number = 1,
+	FLAG_dump = 2,
+	FLAG_visualizer = 4,
+	FLAG_simple_visualiser = 8
+};
 
 typedef struct s_op	t_op;
 
@@ -123,7 +139,6 @@ struct			s_op
 };
 
 extern t_op g_op_tab[17];
-# include "flag_processing.h"
 
 /*
 **	GENERAL PARSING TOOLS
@@ -152,10 +167,18 @@ int				ft_init_vm_settings(t_vm_env *vm_env);
 */
 
 void			ft_init_visualiser(t_vm_env *env);
-void			ft_visualiser_update_value(t_vm_env *env, int offset, int color, int size);
+void			ft_visualiser_update_value(t_vm_env *env,
+	int offset, int color, int size);
 void			ft_visualiser_draw(t_vm_env *env);
-void			ft_visualiser_highlight_process(t_vm_env *env, t_vm_process *process);
-void			ft_visualiser_unhighlight_process(t_vm_env *env, t_vm_process *process);
+void			ft_visualiser_highlight_process(t_vm_env *env,
+	t_vm_process *process);
+void			ft_visualiser_unhighlight_process(t_vm_env *env,
+	t_vm_process *process);
+void			ft_visualiser_draw_memory(t_vm_env *env);
+void			ft_visualiser_draw_info(t_vm_env *env);
+void			ft_visualiser_handle_keys(t_vm_env *env);
+void			ft_visualiser_draw_info_border(void);
+
 /*
 **  EXECUTION FUNCTIONS
 */
