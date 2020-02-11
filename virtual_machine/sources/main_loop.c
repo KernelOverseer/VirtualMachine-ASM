@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 15:14:14 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/09 09:14:11 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/11 06:51:11 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,23 +49,22 @@ int	ft_execute_processes(t_vm_env *env)
 	t_vm_process	*process;
 
 	env->arena.processes.iterator = env->arena.processes.first;
+	if (env->init.flags & FLAG_verbose)
+		ft_printf("It is now cycle %d\n", env->settings.cycles_number);
 	while ((process = ttslist_iter_content(&env->arena.processes)))
 	{
 		process->current_position = ft_modulus(process->current_position,
 			MEM_SIZE);
-		ft_visualiser_update_value(env, process->current_position,
-			process->player->index + 4, 1);
+		ft_visualiser_highlight_process(env, process);
 		if (process->current_position != process->last_position)
 			process->remaining_cycles = ft_op_wait(process, &env->arena, 0) - 1;
 		else if (process->remaining_cycles <= 0)
 		{
 			ft_execute_instruction(env, process, &env->arena);
 			process->last_position = -1;
+			ft_visualiser_unhighlight_process(env, process);
 			process->current_position += process->operation.op_size;
-			ft_visualiser_update_value(env, process->current_position,
-				process->player->index + 4, 1);
-			ft_visualiser_update_value(env, process->current_position,
-				-env->arena.colors[ft_modulus(process->current_position, MEM_SIZE)], 1);
+			ft_visualiser_highlight_process(env, process);
 			process->operation.op_size = 1;
 		}
 		process->remaining_cycles--;

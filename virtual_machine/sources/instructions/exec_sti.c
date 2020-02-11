@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/07 23:14:58 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/09 08:57:32 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/11 06:59:10 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ int	ft_exec_sti(t_vm_env *env, t_vm_process *process)
 
 	(void)env;
 	offset = ft_get_memory(process, &process->operation.args[1], &status);
-	if (process->operation.args[1].type != IND_CODE)
-		offset += ft_get_memory(process, &process->operation.args[2], &status);
+	offset += ft_get_memory(process, &process->operation.args[2], &status);
 	offset = ft_limit_address(offset);
 /*	value = ft_read_memory_address(&env->arena,
 		process->current_position + offset, 4);*/

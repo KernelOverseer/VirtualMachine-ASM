@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 16:08:39 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/09 08:56:45 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/11 02:30:59 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 int	ft_exec_aff(t_vm_env *env, t_vm_process *process)
 {
-	int	status;
+	int				reg_value;
+	int				status;
+
 	(void)env;
-	ft_putchar(ft_get_memory(process, &process->operation.args[0], &status));
+	reg_value = ft_get_memory(process, &process->operation.args[0], &status);
+	ft_printf("Aff: %c\n", (char)(reg_value % 256));
 	return (SUCCESS);
 }

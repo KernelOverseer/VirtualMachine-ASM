@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 17:09:43 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/09 07:38:28 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/11 02:04:39 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,8 @@ int				ft_init_vm_settings(t_vm_env *vm_env);
 void			ft_init_visualiser(t_vm_env *env);
 void			ft_visualiser_update_value(t_vm_env *env, int offset, int color, int size);
 void			ft_visualiser_draw(t_vm_env *env);
+void			ft_visualiser_highlight_process(t_vm_env *env, t_vm_process *process);
+void			ft_visualiser_unhighlight_process(t_vm_env *env, t_vm_process *process);
 /*
 **  EXECUTION FUNCTIONS
 */

@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 15:21:16 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/09 09:22:44 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/11 06:50:14 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #define INFO_PADDING 2
 #define INFO_WIDTH 40
 #define TEXT_SPEED 1
+#define RAW_CURSOR_MODE 11
 
 void	ft_visualiser_draw_border(void)
 {
@@ -95,8 +96,10 @@ void	ft_visualiser_draw_memory(t_vm_env *env)
 				attron(COLOR_PAIR(color));
 			mvprintw(BORDER_MARGINY + 1 + BORDER_PADDINGY + y, BORDER_MARGINX + 1 +
 				BORDER_PADDINGX + x * 3, "%*.2x", 2 + !!(env->init.flags & FLAG_simple_visualiser), env->arena.memory[y * 64 + x]);
-			if (color > MAX_PLAYERS && color != 10)
-				env->arena.colors[y * 64 + x] = color - MAX_PLAYERS;
+			if (color == RAW_CURSOR_MODE)
+				env->arena.colors[y * 64 + x] = 0;
+			/*if (color > MAX_PLAYERS && color != 10 && color != RAW_CURSOR_MODE)
+				env->arena.colors[y * 64 + x] = color - MAX_PLAYERS;*/
 			attroff(A_BOLD);
 			attroff(COLOR_PAIR(color));
 			x++;
@@ -127,6 +130,7 @@ void ft_init_visualiser(t_vm_env *env)
 		init_pair(8, COLOR_WHITE, COLOR_WHITE);
 		init_pair(9, COLOR_GREEN, COLOR_BLACK);
 		init_pair(10, COLOR_BLACK, COLOR_BLACK);
+		init_pair(11, COLOR_WHITE, COLOR_WHITE);
 	}
 	else
 	{
@@ -140,6 +144,7 @@ void ft_init_visualiser(t_vm_env *env)
 		init_pair(8, COLOR_YELLOW, COLOR_WHITE);
 		init_pair(9, COLOR_GREEN, COLOR_BLACK);
 		init_pair(10, COLOR_WHITE, COLOR_BLACK);
+		init_pair(11, COLOR_BLACK, COLOR_WHITE);
 	}
 	ft_visualiser_draw_memory(env);
 }
@@ -189,6 +194,32 @@ void	ft_visualiser_print_player_state(t_vm_env *env, t_vm_player *player, int y_
 	// 	(INFO_WIDTH - INFO_PADDING * 2) - 11,
 	// 	(INFO_WIDTH - INFO_PADDING * 2) - 11, &player->name[text_off]);
 	attroff(COLOR_PAIR(9));
+}
+
+void	ft_visualiser_highlight_process(t_vm_env *env, t_vm_process *process)
+{
+	int	color;
+
+	if (env->settings.cycles_number % env->init.cycle_skip)
+		return ;
+	color = env->arena.colors[ft_modulus(process->current_position, MEM_SIZE)];
+	if (color == 0)
+		color = RAW_CURSOR_MODE;
+	else if (color <= MAX_PLAYERS && color > 0)
+		color += 4;
+	env->arena.colors[ft_modulus(process->current_position, MEM_SIZE)] = color;
+}
+
+void	ft_visualiser_unhighlight_process(t_vm_env *env, t_vm_process *process)
+{
+	int	color;
+
+	color = env->arena.colors[ft_modulus(process->current_position, MEM_SIZE)];
+	if (color == RAW_CURSOR_MODE)
+		color = 0;
+	else if (color > MAX_PLAYERS && color < 9)
+		color -= 4;
+	env->arena.colors[ft_modulus(process->current_position, MEM_SIZE)] = color;
 }
 
 void	ft_visualiser_draw_info(t_vm_env *env)
