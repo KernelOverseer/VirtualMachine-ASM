@@ -6,13 +6,13 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 03:00:49 by abiri             #+#    #+#             */
-/*   Updated: 2020/01/26 06:18:46 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/12 01:31:58 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ttslist.h"
 
-void		*ttslist_iter_content(t_list_head	*head)
+void		*ttslist_iter_content(t_list_head *head)
 {
 	void				*result;
 
@@ -23,7 +23,7 @@ void		*ttslist_iter_content(t_list_head	*head)
 	return (result);
 }
 
-t_list_node	*ttslist_iter(t_list_head	*head)
+t_list_node	*ttslist_iter(t_list_head *head)
 {
 	t_list_node			*result;
 

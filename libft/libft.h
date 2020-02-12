@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abiri <abiri@1337.MA>                      +#+  +:+       +#+        */
+/*   By: aelouarg <aelouarg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/04 11:38:53 by abiri             #+#    #+#             */
-/*   Updated: 2019/05/20 23:46:32 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/03 10:17:10 by slyazid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define FALSE 0
 # define SUCCESS 1
 # define ERROR 0
+# define MAX_FD 1
 
 typedef	struct		s_list
 {
@@ -41,6 +42,7 @@ enum
 };
 
 int					ft_atoi(const char *str);
+unsigned int		ft_atou(const char *str);
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
 size_t				ft_strlen(const char *s);
@@ -83,6 +85,7 @@ int					ft_strequ(const char *s1, const char *s2);
 int					ft_strnequ(const char *s1, const char *s2, size_t n);
 char				*ft_strsub(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(const char *s1, const char *s2);
+char				*ft_strnjoin(char *s1, char *s2, size_t len);
 char				*ft_strtrim(char const *s);
 char				**ft_strsplit(char const *s, char c);
 char				**ft_strsplitcharset(char const *s, char *c);
@@ -93,7 +96,7 @@ void				ft_putchar_fd(char c, int fd);
 void				ft_putnbr(int nb);
 void				ft_putstr_fd(char const *s, int fd);
 void				ft_putnbr_fd(int nb, int fd);
-char				*ft_itoa(int n);
+char				*ft_itoa(unsigned int n);
 int					ft_putchar(int c);
 
 t_list				*ft_lstnew(void const *content, size_t content_size);

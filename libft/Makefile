@@ -3,15 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abiri <abiri@1337.MA>                      +#+  +:+       +#+         #
+#    By: aelouarg <aelouarg@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/11 14:42:53 by abiri             #+#    #+#              #
-#    Updated: 2019/07/29 21:17:21 by aelouarg         ###   ########.fr        #
+#    Updated: 2020/02/03 10:17:28 by slyazid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 SRC = ft_atoi.c\
+	  ft_atou.c\
 	  ft_bzero.c\
 	  ft_charreplace.c\
 	  ft_count_if.c\
@@ -62,6 +63,7 @@ SRC = ft_atoi.c\
 	  ft_striter.c\
 	  ft_striteri.c\
 	  ft_strjoin.c\
+	  ft_strnjoin.c\
 	  ft_strlcat.c\
 	  ft_strlen.c\
 	  ft_strmap.c\

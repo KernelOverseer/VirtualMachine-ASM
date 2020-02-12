@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@1337.MA>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/06 00:10:35 by abiri             #+#    #+#             */
-/*   Updated: 2018/10/07 10:10:17 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/03 05:03:27 by slyazid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static	void	neg(long int *nbim, int *index, char *final)
 	}
 }
 
-char			*ft_itoa(int nb)
+char			*ft_itoa(unsigned int nb)
 {
 	char		arr[12];
 	char		*final;

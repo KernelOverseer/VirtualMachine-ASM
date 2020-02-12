@@ -6,7 +6,7 @@
 /*   By: abiri <kerneloverseer@pm.me>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 23:48:36 by abiri             #+#    #+#             */
-/*   Updated: 2019/12/19 01:40:38 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/12 01:32:20 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_list_node	*ttslist_push_front(t_list_head *head, t_list_node *newnode)
 	return (newnode);
 }
 
-t_list_node *ttslist_push_front_new(t_list_head *head, void *content)
+t_list_node	*ttslist_push_front_new(t_list_head *head, void *content)
 {
 	return (ttslist_push_front(head, ttslist_new_node(content, 0)));
 }

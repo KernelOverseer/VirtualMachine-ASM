@@ -6,7 +6,7 @@
 /*   By: abiri <kerneloverseer@pm.me>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 23:38:54 by abiri             #+#    #+#             */
-/*   Updated: 2019/12/19 02:58:13 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/12 01:31:13 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_list_node		*ttslist_new_node(void *content, size_t content_size)
 	return (new_node);
 }
 
-void			ttslist_init(t_list_head	*head)
+void			ttslist_init(t_list_head *head)
 {
 	tts_bzero(head, sizeof(t_list_head));
 	head->push = &ttslist_push_new;
