@@ -6,14 +6,14 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 15:43:02 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/11 07:35:38 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/12 05:59:38 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FLAG_PROCESSING_H
 # define FLAG_PROCESSING_H
 # include "virtual_machine.h"
-# define FLAG_COUNT 4
+# define FLAG_COUNT 5
 # define PLAYER_INDEX_NONE -1
 
 typedef int				t_flag_processor(void *env, int flag_index,

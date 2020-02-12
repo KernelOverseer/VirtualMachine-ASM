@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 17:09:43 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/11 21:54:54 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/12 06:00:05 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ enum	e_commandline_flags
 	FLAG_player_number = 1,
 	FLAG_dump = 2,
 	FLAG_visualizer = 4,
-	FLAG_simple_visualiser = 8
+	FLAG_simple_visualiser = 8,
+	FLAG_live = 16
 };
 
 typedef struct s_op	t_op;
@@ -178,6 +179,7 @@ void			ft_visualiser_draw_memory(t_vm_env *env);
 void			ft_visualiser_draw_info(t_vm_env *env);
 void			ft_visualiser_handle_keys(t_vm_env *env);
 void			ft_visualiser_draw_info_border(void);
+void			ft_visualiser_draw_winners(t_vm_env *env, t_vm_player *player);
 
 /*
 **  EXECUTION FUNCTIONS

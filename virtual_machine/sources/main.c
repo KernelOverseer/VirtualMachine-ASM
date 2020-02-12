@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 23:18:56 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/11 21:24:01 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/12 05:09:26 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,17 @@ void	ft_announce_winner(t_vm_env *env)
 
 	if (env->init.flags & FLAG_dump)
 		return ;
-	if (env->init.flags & FLAG_visualizer)
-	{
-		endwin();
-		return ;
-	}
 	env->init.players.iterator = env->init.players.first;
 	while ((player = ttslist_iter_content(&env->init.players)))
 	{
 		if (player->index == env->settings.last_alive)
 		{
+			if (env->init.flags & FLAG_visualizer)
+			{
+				ft_visualiser_draw_winners(env, player);
+				endwin();
+				return ;
+			}
 			ft_printf("Contestant %d, \"%s\", has won !\n",
 				player->index, player->name);
 			break ;

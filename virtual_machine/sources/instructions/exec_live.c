@@ -6,13 +6,22 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 16:09:46 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/11 07:20:05 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/12 06:03:36 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "virtual_machine.h"
 
-int	ft_exec_live(t_vm_env *env, t_vm_process *process)
+void	ft_print_player_live(t_vm_env *env, t_vm_process *process)
+{
+	if ((env->init.flags & FLAG_visualizer) ||
+		!(env->init.flags & FLAG_live))
+		return ;
+	ft_printf("A process shows that player %d (%s) is alive\n",
+	process->player->index, process->player->name);
+}
+
+int		ft_exec_live(t_vm_env *env, t_vm_process *process)
 {
 	int			player_code;
 	t_vm_player	*player;
@@ -25,9 +34,12 @@ int	ft_exec_live(t_vm_env *env, t_vm_process *process)
 		env->settings.last_alive = player_code;
 		if ((player = ttslist_get_id_content(&env->init.players,
 			player_code - 1)))
+		{
 			player->last_live = env->settings.cycles_number;
-		ft_visualiser_update_value(env,
-			process->current_position, -player_code, 5);
+			ft_print_player_live(env, process);
+			ft_visualiser_update_value(env,
+				process->current_position, -player_code, 5);
+		}
 	}
 	else
 		ft_visualiser_update_value(env,

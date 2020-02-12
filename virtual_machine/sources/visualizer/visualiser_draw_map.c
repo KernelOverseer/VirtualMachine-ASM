@@ -6,7 +6,7 @@
 /*   By: abiri <abiri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 07:14:18 by abiri             #+#    #+#             */
-/*   Updated: 2020/02/11 21:49:57 by abiri            ###   ########.fr       */
+/*   Updated: 2020/02/12 05:32:57 by abiri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,27 @@ static int	ft_color_transform(char *color_array)
 	else
 		attron(COLOR_PAIR(color));
 	return (color);
+}
+
+void		ft_visualiser_draw_winners(t_vm_env *env, t_vm_player *player)
+{
+	int c;
+
+	(void)env;
+	attron(COLOR_PAIR(9));
+	attron(A_BOLD);
+	ft_visualiser_draw_info_border();
+	ft_visualiser_draw_border();
+	mvprintw(BORDER_MARGINY + BORDER_PADDINGY + 2 + 5 + 50,
+	BORDER_MARGINX + BORDER_PADDINGX * 2 + 192 + 2 + INFO_PADDING,
+	"Contestant %d,", player->index);
+	mvprintw(BORDER_MARGINY + BORDER_PADDINGY + 2 + 5 + 50 + 2,
+	BORDER_MARGINX + BORDER_PADDINGX * 2 + 192 + 2 + INFO_PADDING,
+	"\"%-*.*s\"", INFO_WIDTH - 6, INFO_WIDTH - 6, player->name);
+	timeout(-1);
+	c = 0;
+	while (c != 'q')
+		c = getch();
 }
 
 void		ft_visualiser_draw_memory(t_vm_env *env)
