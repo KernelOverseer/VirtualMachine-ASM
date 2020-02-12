@@ -1,5 +1,5 @@
-.name "abassayno"
-.comment "abassayno im9our fobassank"
+.name "Abassayno"
+.comment "Abassayno im9our fobassank !!!!"
 
 start:
 	sti r1, %:livenow, %1
